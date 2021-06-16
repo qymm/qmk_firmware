@@ -17,41 +17,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef OLED_DRIVER_ENABLE
-#   include "oled.c"
-#endif
-
-#define TAP_CODE_DELAY 10
-
-bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
-
-void encoder_update_user(uint8_t index, bool clockwise) {
-
-  bool ctrl = get_mods() & MOD_MASK_CTRL;
-  if (ctrl) {
-	if (clockwise) {
-	  tap_code16(KC_TAB);
-	} else {
-	  tap_code16(S(KC_TAB));
-	}
-  }
-  else {
-	if (!is_alt_tab_active) {
-		is_alt_tab_active = true;
-		register_code(KC_LALT);
-	}
-	if (clockwise) {
-	  alt_tab_timer = timer_read();
-	  tap_code16(KC_TAB);
-	} else {
-	  alt_tab_timer = timer_read();
-	  tap_code16(S(KC_TAB));
-	}
-  }
-}
-
-//
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
