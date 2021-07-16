@@ -87,9 +87,9 @@ void encoder_update_kb(uint8_t index, bool clockwise) {
   }
   else if (ctrl) {
 	if (clockwise) {
-	  tap_code16(KC_TAB);
+	  tap_code16(C(KC_PGUP));
 	} else {
-	  tap_code16(S(KC_TAB));
+	  tap_code16(C(KC_PGDOWN));
 	}
   }
   else {

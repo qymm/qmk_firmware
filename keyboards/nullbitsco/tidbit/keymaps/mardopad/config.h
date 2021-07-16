@@ -14,8 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define TAPPING_TERM 200
 
 // Encoders are defined in order. 1: B2 & B3, 2: B4 & B5, 3: D0 & D1, 4: D2 & D3
-#define ENCODERS_PAD_A { D3 }
-#define ENCODERS_PAD_B { D2 }
+#define ENCODERS_PAD_A { B2, B4, D0, D3 }
+#define ENCODERS_PAD_B { B3, B5, D1, D2 }
+#define ENCODER_DIRECTION_FLIP
+// For some reason, the 4th encoder is inverted and needs to actually be D3&D2 in the firmware. "Clockwise" makes sense in the keymap this way.

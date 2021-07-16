@@ -72,11 +72,33 @@ void matrix_scan_user(void) {
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-  if (clockwise) {
-    tap_code(KC_VOLU);
-  } else {
-    tap_code(KC_VOLD);
-  } 
+
+  /* With an if statement we can check which encoder was turned. */
+  if (index == 0) { /* First encoder */
+    if (clockwise) {
+      tap_code16(LCTL(KC_PGUP));
+    } else {
+      tap_code16(LCTL(KC_PGDOWN));
+    }
+  } else if (index == 1) { /* Second encoder */
+    if (clockwise) {
+      tap_code16(LCTL(KC_HOME));
+    } else {
+      tap_code16(LCTL(KC_END));
+    }
+  } else if (index == 2) { /* Thrid encoder */
+    if (clockwise) {
+      tap_code16(S(LCTL(KC_INSERT)));
+    } else {
+      tap_code16(S(LCTL(KC_DEL)));
+    }
+  } else if (index == 3) { /* Forth encoder */
+    if (clockwise) {
+      tap_code16(LCTL(KC_INSERT));
+    } else {
+      tap_code16(LCTL(KC_DEL));
+    }  
+  }
   return true;
 }
 
