@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 OLED_DRIVER_ENABLE = yes
 TAP_DANCE_ENABLE = yes
+=======
+VIA_ENABLE = yes
+OLED_ENABLE = yes
+OLED_DRIVER = SSD1306
+>>>>>>> 615dbd62e945fde4c26335ed24774d1feeb1dadf
