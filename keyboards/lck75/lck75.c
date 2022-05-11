@@ -14,20 +14,47 @@
  */
 #include "lck75.h"
 
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
 bool encoder_update_kb(uint8_t index, bool clockwise) {
-    if (!encoder_update_user(index, clockwise)) return false;
-    if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
-    }
+	
+  bool ctrl = get_mods() & MOD_MASK_CTRL;
+  if (ctrl) {
+	if (clockwise) {
+	  tap_code16(KC_TAB);
+	} else {
+	  tap_code16(S(KC_TAB));
+	}
+  }
+  else {
+	if (!is_alt_tab_active) {
+		is_alt_tab_active = true;
+		register_code(KC_LALT);
+	}
+	if (clockwise) {
+	  alt_tab_timer = timer_read();
+	  tap_code16(KC_TAB);
+	} else {
+	  alt_tab_timer = timer_read();
+	  tap_code16(S(KC_TAB));
+	}
+  }
     return true;
+}
+
+void matrix_scan_user(void) {
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
 }
 
 #define IDLE_FRAMES 5
 #define IDLE_SPEED 30
+#define TAP_CODE_DELAY 10
 #define TAP_FRAMES 2
 #define TAP_SPEED 40
 #define ANIM_FRAME_DURATION 200
